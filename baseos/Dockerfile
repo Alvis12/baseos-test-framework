@@ -5,6 +5,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Taipei
 
 RUN apt-get update && \
+    apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
         python3 \
         git \

@@ -45,23 +45,33 @@ pipeline {
             }
             
         }
+
+
         stage('Security scan') {
-                steps {
-                    sh '''
-                        for v in 22.04 24.04; do
-                            docker run --rm \
-                            -v /var/run/docker.sock:/var/run/docker.sock \
-                            -v trivy-cache:/root/.cache/ \
-                            aquasec/trivy:latest image \
-                            --scanners vuln \
-                            --severity HIGH,CRITICAL \
-                            --ignore-unfixed \
-                            --exit-code 1 \
-                            mini-baseos:$v
-                        done
-                    '''
-                }
+            steps {
+                sh '''
+                    rc=0
+                    for v in 22.04 24.04; do
+                        docker run --rm \
+                          -v /var/run/docker.sock:/var/run/docker.sock \
+                          -v trivy-cache:/root/.cache/ \
+                          aquasec/trivy:latest image \
+                          --scanners vuln \
+                          --severity HIGH,CRITICAL \
+                          --ignore-unfixed \
+                          --exit-code 1 \
+                          mini-baseos:$v || rc=1
+                    done
+                    exit $rc
+                '''
+            }
         }
+
+
+
+
+
+
     }
 
     post {
