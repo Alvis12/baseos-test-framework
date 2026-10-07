@@ -8,6 +8,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         python3 \
         git \
+        curl \
         ca-certificates \
         tzdata && \
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
