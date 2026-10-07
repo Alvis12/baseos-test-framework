@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    triggers {
+        pollSCM('H/5 * * * *')
+        cron('H 2 * * *')
+    }
+
     stages {
         stage('Setup Python') {
             steps {
