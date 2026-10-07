@@ -24,11 +24,11 @@ The project simulates how a server vendor would verify an operating system image
 ```mermaid
 flowchart LR
     dev["Developer<br/>git push"] --> gh["GitHub"]
-    gh -->|"poll every 5 min<br/>+ nightly"| jk["Jenkins<br/>(custom image)"]
-    jk -->|"docker build"| img["mini-baseos images<br/>22.04 / 24.04"]
-    jk -->|"pytest via docker exec"| dut1["DUT<br/>Ubuntu 22.04"]
-    jk -->|"pytest via docker exec"| dut2["DUT<br/>Ubuntu 24.04"]
-    jk -->|"Trivy scan"| img
+    gh -->|poll and nightly| jk["Jenkins<br/>custom image"]
+    jk -->|docker build| img["mini-baseos images<br/>22.04 and 24.04"]
+    jk -->|pytest| dut1["DUT<br/>Ubuntu 22.04"]
+    jk -->|pytest| dut2["DUT<br/>Ubuntu 24.04"]
+    jk -->|Trivy scan| img
     jk --> rep["JUnit report<br/>build status"]
 ```
 
